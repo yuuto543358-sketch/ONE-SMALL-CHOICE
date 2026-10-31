@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ONE SMALL CHOICE</title>
+<meta name="description" content="小さな選択が、世界を変える。バタフライエフェクトをテーマにしたシミュレーションゲーム。">
+<meta name="theme-color" content="#F5F6F3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Jost:wght@300;400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ① HOME -->
+  <section class="screen" id="screen-home" aria-label="ホーム">
+    <div class="wrap">
+      <div class="eyebrow home-kicker">A Butterfly Effect Simulation</div>
+      <div class="home-globe" id="home-globe"></div>
+      <h1 class="home-title">ONE SMALL CHOICE</h1>
+      <p class="home-catch">小さな選択が、世界を変える。</p>
+      <div class="home-actions">
+        <button class="btn" data-act="start">START</button>
+        <button class="btn ghost" data-act="continue" id="btn-continue" hidden>CONTINUE</button>
+        <button class="btn-text" data-act="collection">SCENARIO COLLECTION</button>
+        <button class="btn-text" data-act="howto">HOW TO PLAY</button>
+      </div>
+      <p class="home-record" id="home-record"></p>
+    </div>
+  </section>
+
+  <!-- SCENARIO COLLECTION -->
+  <section class="screen" id="screen-collection" aria-label="シナリオ一覧">
+    <header class="topbar"><div class="wrap">
+      <button class="icon-btn" data-act="home" aria-label="ホームへ戻る"></button>
+      <div class="topbar-title">SCENARIO COLLECTION</div>
+    </div></header>
+    <div class="wrap" id="collection-body"></div>
+  </section>
+
+  <!-- ② SCENARIO -->
+  <section class="screen" id="screen-scenario" aria-label="シナリオ">
+    <header class="topbar"><div class="wrap">
+      <button class="icon-btn" data-act="back-scenario" aria-label="戻る"></button>
+      <div class="topbar-title" data-title></div>
+      <div class="progress" data-progress="0"></div>
+    </div></header>
+    <div class="wrap" id="scenario-body"></div>
+  </section>
+
+  <!-- ③ CHOICE -->
+  <section class="screen" id="screen-choice" aria-label="選択">
+    <header class="topbar"><div class="wrap">
+      <button class="icon-btn" data-act="back-choice" aria-label="シナリオに戻る"></button>
+      <div class="topbar-title" data-title></div>
+      <div class="progress" data-progress="1"></div>
+    </div></header>
+    <div class="wrap" id="choice-body"></div>
+  </section>
+
+  <!-- ④ SIMULATION -->
+  <section class="screen" id="screen-sim" aria-label="シミュレーション">
+    <header class="topbar"><div class="wrap">
+      <button class="icon-btn" data-act="home" aria-label="ホームへ戻る"></button>
+      <div class="topbar-title" id="sim-title"></div>
+      <div class="progress" data-progress="2"></div>
+    </div></header>
+    <div class="sim-status"><div class="wrap">
+      <div class="sim-clock"><span class="when" id="sim-when" aria-live="polite">その場で</span><span class="year" id="sim-year">2026年</span></div>
+      <div class="scope-meter" id="scope-meter" aria-label="影響の広がり"></div>
+    </div></div>
+    <div class="sim-scroll" id="sim-scroll"><div class="wrap">
+      <div class="timeline" id="timeline"><svg class="links" id="links" aria-hidden="true"></svg></div>
+      <div class="sim-wait" id="sim-wait"><i></i><i></i><i></i></div>
+      <div id="sim-end-slot"></div>
+    </div></div>
+    <div class="sim-dock"><div class="wrap" id="sim-dock"></div></div>
+    <div class="sheet-veil" id="sheet-veil"></div>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title"><div class="wrap" id="sheet-body"></div></div>
+  </section>
+
+  <!-- ⑤ FUTURE -->
+  <section class="screen" id="screen-future" aria-label="未来">
+    <header class="topbar"><div class="wrap">
+      <button class="icon-btn" data-act="home" aria-label="ホームへ戻る"></button>
+      <div class="topbar-title" data-title></div>
+      <div class="progress" data-progress="3"></div>
+    </div></header>
+    <div class="wrap" id="future-body"></div>
+  </section>
+
+  <!-- ⑥ COMPARISON -->
+  <section class="screen" id="screen-compare" aria-label="未来の比較">
+    <header class="topbar"><div class="wrap">
+      <button class="icon-btn" data-act="back-compare" aria-label="未来に戻る"></button>
+      <div class="topbar-title" data-title></div>
+      <div class="progress" data-progress="4"></div>
+    </div></header>
+    <div class="wrap" id="compare-body"></div>
+  </section>
+
+  <!-- HOW TO PLAY -->
+  <div class="modal" id="howto" role="dialog" aria-modal="true" aria-labelledby="howto-title">
+    <div class="modal-card" id="howto-card"></div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+</div>
+
+<!-- ゲーム本体 -->
+<script src="js/engine.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/art.js"></script>
+<script src="js/anim.js"></script>
+<!-- シナリオデータ（ファイルを追加すればシナリオが増える） -->
+<script src="scenarios/001_bottle.js"></script>
+<script src="scenarios/002_help.js"></script>
+<script src="scenarios/003_tree.js"></script>
+<script src="scenarios/004_sns.js"></script>
+<script src="scenarios/005_path.js"></script>
+<script src="scenarios/006_product.js"></script>
+<script src="scenarios/007_friend.js"></script>
+<script src="scenarios/008_trash.js"></script>
+<!-- 画面 -->
+<script src="js/sim-view.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
